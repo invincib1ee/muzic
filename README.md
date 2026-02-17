@@ -1,5 +1,6 @@
 # Music45 - Mobile Music Streaming App
-All efforts made by [This Guy](https://t.me/HTLivesm3u) ,, i just edited little bit
+All efforts made by [This Guy](https://t.me/HTLivesm3u) ,, i just edited little bit 🫶
+
 A beautiful, modern music streaming application built with TypeScript, featuring a dark theme, smooth animations, and seamless playback experience.
 
 ![Music45](https://img.shields.io/badge/version-2.0.0-blue.svg)

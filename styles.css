@@ -731,7 +731,16 @@ body {
 .nav-item i {
     width: 1.5rem;
     height: 1.5rem;
+    /* --- BOUNCE ANIMATION --- */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
 }
+
+.nav-item.active i {
+    /* Makes the active tab pop up, get bigger, and glow! */
+    transform: translateY(-5px) scale(1.25);
+    filter: drop-shadow(0 4px 8px var(--primary));
+}
+
 
 /* Music Banner (Full-Screen Player) */
 .music-banner {

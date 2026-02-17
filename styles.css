@@ -1238,11 +1238,24 @@ body {
 .search-container {
     display: flex;
     align-items: center;
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 0.5rem;
-    gap: 0.5rem;
-    box-shadow: var(--shadow-card);
+    /* --- GLASS BUBBLE UPGRADE --- */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px; /* Makes it a perfect pill shape */
+    padding: 0.5rem 1.2rem; /* Wider padding for the rounded edges */
+    gap: 0.8rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- THE 'FOCUS' GLOW (When you tap to type) --- */
+.search-container:focus-within {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); /* Soft glowing aura */
+    transform: translateY(-3px); /* Lifts up slightly when typing */
 }
 
 .search-container input {

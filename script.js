@@ -904,9 +904,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!('mediaSession' in navigator) || !item) return;
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
-        title: item.title,
-        artist: item.artist,
-        artwork: [{ src: item.cover || FALLBACK_COVER, sizes: '512x512', type: 'image/png' }]
+        title: item.title || 'Unknown Title',
+        artist: item.artist || 'Unknown Artist',
+        album: 'Music45', // Added this so it looks like a real app!
+        artwork: [
+          // Providing multiple sizes helps Android pick the perfect one for the notification panel
+          { src: item.cover || FALLBACK_COVER, sizes: '96x96' },
+          { src: item.cover || FALLBACK_COVER, sizes: '128x128' },
+          { src: item.cover || FALLBACK_COVER, sizes: '192x192' },
+          { src: item.cover || FALLBACK_COVER, sizes: '256x256' },
+          { src: item.cover || FALLBACK_COVER, sizes: '384x384' },
+          { src: item.cover || FALLBACK_COVER, sizes: '512x512' }
+        ]
       });
       navigator.mediaSession.setActionHandler('play', () => audio.play());
       navigator.mediaSession.setActionHandler('pause', () => audio.pause());

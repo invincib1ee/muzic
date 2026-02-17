@@ -92,6 +92,19 @@ body {
     position: relative;
 }
 
+.header-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem; /* Adds a tiny space between your name and the greeting */
+}
+
+.user-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--foreground-muted); /* Makes the text a sleek grey */
+    letter-spacing: 1.5px; /* Spaces the letters out for a modern look */
+}
+
 .greeting {
     font-size: 1.8rem;
     font-weight: 800;

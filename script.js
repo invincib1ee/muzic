@@ -1712,3 +1712,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+// --- CLICK TO ENTER LOGIC ---
+document.addEventListener("DOMContentLoaded", () => {
+  const entryScreen = document.getElementById("entry-screen");
+  const enterBtn = document.getElementById("enter-btn");
+
+  if (enterBtn && entryScreen) {
+    enterBtn.addEventListener("click", () => {
+      // Fade out the black screen
+      entryScreen.style.opacity = "0";
+      entryScreen.style.visibility = "hidden";
+    });
+    
+    // Add hover effect for the button
+    enterBtn.addEventListener("mouseenter", () => {
+        enterBtn.style.background = "#fff";
+        enterBtn.style.color = "#000";
+    });
+    enterBtn.addEventListener("mouseleave", () => {
+        enterBtn.style.background = "transparent";
+        enterBtn.style.color = "#fff";
+    });
+  }
+});

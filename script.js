@@ -523,14 +523,26 @@ document.addEventListener('DOMContentLoaded', () => {
         compactFooter.classList.remove('active');
       }
     }
+        
     // Update music banner
-    if (bannerCover) bannerCover.src = cover;
+    if (bannerCover) {
+      bannerCover.src = cover;
+      // Make it a circle and add the spin animation
+      bannerCover.classList.add('spin-vinyl');
+      // Play or pause the spinning animation based on the music
+      if (playing) {
+        bannerCover.classList.remove('pause-spin');
+      } else {
+        bannerCover.classList.add('pause-spin');
+      }
+    }
     if (bannerTitle) bannerTitle.textContent = title;
     if (bannerArtist) bannerArtist.textContent = artist;
     if (bannerPlayPauseBtn) bannerPlayPauseBtn.innerHTML = playing ? '<i data-lucide="pause"></i>' : '<i data-lucide="play"></i>';
     if (document.querySelector('.player-container')) {
       document.querySelector('.player-container').style.setProperty('--banner-cover-url', `url("${cover}")`);
     }
+
 
     refreshIcons();
   }

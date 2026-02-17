@@ -1731,5 +1731,24 @@ document.addEventListener('DOMContentLoaded', () => {
       loadMultipleNewReleaseAlbums();
     }
   }
+  
+  // --- KARAOKE MODE LOGIC ---
+  const karaokeBtn = document.getElementById('karaoke-toggle-btn');
+  if (karaokeBtn) {
+    karaokeBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Stops the lyrics from flipping back to the album cover
+      
+      const banner = document.getElementById('music-banner');
+      banner.classList.toggle('karaoke-active');
+      
+      // Change the icon from a Microphone to a 'Minimize' icon when active
+      if (banner.classList.contains('karaoke-active')) {
+          karaokeBtn.innerHTML = '<i data-lucide="minimize-2"></i>';
+      } else {
+          karaokeBtn.innerHTML = '<i data-lucide="mic"></i>';
+      }
+      lucide.createIcons(); // Refresh the icon display
+    });
+  }
 
 });

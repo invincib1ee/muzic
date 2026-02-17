@@ -2007,3 +2007,44 @@ body {
 .pause-spin {
   animation-play-state: paused; /* Freezes the rotation exactly where it is */
 }
+
+/* --- FULL-SCREEN KARAOKE MODE --- */
+.music-banner.karaoke-active .player-container {
+    max-width: 100%;
+    border-radius: 0;
+    padding: 0;
+}
+.music-banner.karaoke-active .flip-container {
+    height: 100vh;
+    margin: 0;
+}
+.music-banner.karaoke-active .flip-back {
+    height: 100vh;
+    padding: 80px 20px 40px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+}
+
+/* Hide the normal player controls so lyrics take over */
+.music-banner.karaoke-active .song-info,
+.music-banner.karaoke-active .progress-container,
+.music-banner.karaoke-active .main-controls,
+.music-banner.karaoke-active .close-btn {
+    display: none !important;
+}
+
+/* Make the active lyrics MASSIVE and glowing */
+.music-banner.karaoke-active .lyrics-line.active-line {
+    font-size: 2.2rem;
+    line-height: 1.4;
+    margin: 2.5rem 0;
+    text-shadow: 0 0 20px var(--primary);
+}
+.music-banner.karaoke-active .lyrics-line {
+    font-size: 1.2rem;
+}
+
+#karaoke-toggle-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary);
+}

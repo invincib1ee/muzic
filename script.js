@@ -1750,5 +1750,13 @@ document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons(); // Refresh the icon display
     });
   }
+  // --- EQUALIZER LOGIC ---
+  const eqContainer = document.getElementById('bar-equalizer');
+  const audioPlayer = document.querySelector('audio'); 
 
+  if (audioPlayer && eqContainer) {
+      audioPlayer.addEventListener('play', () => eqContainer.classList.add('active'));
+      audioPlayer.addEventListener('pause', () => eqContainer.classList.remove('active'));
+  }
+  
 });

@@ -1760,3 +1760,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
 });
+
+// --- NEW LANDING PAGE LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Find the new button and landing page we just made
+    const newEnterBtn = document.getElementById('enter-btn');
+    const newLandingPage = document.getElementById('landing-page');
+
+    // 2. Check if they exist
+    if (newEnterBtn && newLandingPage) {
+        
+        // 3. When you click "ENTER WORLD"...
+        newEnterBtn.addEventListener('click', () => {
+            console.log("Enter button clicked!"); // This helps us know it worked
+            
+            // Start the fade-out animation
+            newLandingPage.style.transition = "opacity 0.8s ease";
+            newLandingPage.style.opacity = "0";
+            
+            // Wait 0.8 seconds (800ms) for the fade, then remove it
+            setTimeout(() => {
+                newLandingPage.style.display = "none";
+            }, 800);
+        });
+    }
+});

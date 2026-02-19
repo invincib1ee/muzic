@@ -503,6 +503,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update floating player
     if (imgEl) imgEl.src = cover;
+    // Trigger the dynamic color change
+    applyDynamicTheme(cover);
+    
     if (titleEl) titleEl.textContent = title;
     if (artistEl) artistEl.textContent = artist;
     if (playBtn) playBtn.innerHTML = playing ? '<i data-lucide="pause"></i>' : '<i data-lucide="play"></i>';

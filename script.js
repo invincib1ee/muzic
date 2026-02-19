@@ -1770,7 +1770,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Check if they exist
     if (newEnterBtn && newLandingPage) {
         
-        // 3. When you click "ENTER WORLD"...
+        // 3. When you click "CLICK HERE"...
         newEnterBtn.addEventListener('click', () => {
             console.log("Enter button clicked!"); // This helps us know it worked
             

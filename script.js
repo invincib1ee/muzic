@@ -1855,3 +1855,90 @@ function applyDynamicTheme(imgUrl) {
         }
     });
 }
+// --- FLOATING MINI PLAYER LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    const floatingMini = document.getElementById('floating-mini');
+    const floatingImg = document.getElementById('floating-img');
+    const floatingTitle = document.getElementById('floating-title');
+    const floatingPlayBtn = document.getElementById('floating-play-btn');
+    const floatingCloseBtn = document.getElementById('floating-close-btn');
+    const appAudio = document.getElementById('audio');
+    
+    // Grabs the current track info from your existing hidden footer
+    const footerTitle = document.getElementById('footer-track-title');
+    const footerImg = document.getElementById('footer-track-image');
+
+    // Convert the top-right "Clock" icon into the Mini-Player trigger
+    const headerIcons = document.querySelectorAll('.header-icons .icon-button');
+    if (headerIcons.length >= 2) {
+        const pipBtn = headerIcons[1]; 
+        pipBtn.innerHTML = '<i data-lucide="layers"></i>'; 
+        
+        pipBtn.addEventListener('click', () => {
+            floatingMini.classList.add('active');
+            updateMiniUI();
+        });
+    }
+
+    // Expand button (closes the mini player)
+    floatingCloseBtn.addEventListener('click', () => {
+        floatingMini.classList.remove('active');
+    });
+
+    // Play/Pause logic
+    floatingPlayBtn.addEventListener('click', () => {
+        if (appAudio.paused) appAudio.play();
+        else appAudio.pause();
+    });
+
+    // Syncs the UI with the main app
+    function updateMiniUI() {
+        if (footerTitle && footerImg) {
+            floatingTitle.textContent = footerTitle.textContent;
+            floatingImg.src = footerImg.src;
+        }
+        if (!appAudio.paused) {
+            floatingPlayBtn.innerHTML = '<i data-lucide="pause"></i>';
+            floatingMini.classList.add('playing');
+        } else {
+            floatingPlayBtn.innerHTML = '<i data-lucide="play"></i>';
+            floatingMini.classList.remove('playing');
+        }
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    appAudio.addEventListener('play', updateMiniUI);
+    appAudio.addEventListener('pause', updateMiniUI);
+    appAudio.addEventListener('loadeddata', updateMiniUI);
+    
+    // --- DRAG LOGIC FOR TOUCHSCREENS ---
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+
+    floatingMini.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        const rect = floatingMini.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+    }, {passive: true});
+
+    document.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        
+        // Move the widget
+        floatingMini.style.left = (initialLeft + (currentX - startX)) + 'px';
+        floatingMini.style.top = (initialTop + (currentY - startY)) + 'px';
+        
+        // Release bottom/right constraints so it moves freely
+        floatingMini.style.bottom = 'auto'; 
+        floatingMini.style.right = 'auto';  
+    }, {passive: true});
+
+    document.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+});

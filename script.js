@@ -1785,3 +1785,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// --- HAPTIC FEEDBACK (MICRO-INTERACTIONS) ---
+// This listens to the whole app, so it works on songs that load from the internet!
+document.addEventListener('click', (event) => {
+    // 1. Define what should cause a vibration when tapped
+    const isClickable = event.target.closest(`
+        button, 
+        .nav-item, 
+        .music-card, 
+        .album-track, 
+        .search-result-item, 
+        .quality-btn, 
+        .lang-card,
+        .flip-btn
+    `);
+
+    // 2. If the tapped item is in our list, and the device supports vibration
+    if (isClickable && navigator.vibrate) {
+        // Trigger a 40-millisecond vibration (a premium, subtle tap)
+        navigator.vibrate(40); 
+    }
+});

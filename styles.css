@@ -2208,3 +2208,71 @@ body {
     70% { box-shadow: 0 0 0 15px rgba(247, 37, 133, 0); }
     100% { box-shadow: 0 0 0 0 rgba(247, 37, 133, 0); }
 }
+/* --- FLOATING MINI PLAYER STYLES --- */
+.floating-mini {
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+    touch-action: none; /* Prevents screen scrolling while dragging */
+}
+
+.floating-mini.active {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.floating-mini img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* Makes the album art spin like a record when playing */
+.floating-mini.playing img {
+    animation: spin 8s linear infinite;
+}
+
+.floating-info {
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.floating-info span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.floating-mini button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.floating-mini button:hover {
+    color: var(--primary);
+}

@@ -1807,3 +1807,48 @@ document.addEventListener('click', (event) => {
         navigator.vibrate(40); 
     }
 });
+
+// --- DYNAMIC BACKGROUND THEMING ---
+function applyDynamicTheme(imgUrl) {
+    if (!imgUrl || typeof ColorThief === 'undefined') return;
+
+    const colorThief = new ColorThief();
+    const img = new Image();
+    
+    // This allows us to grab colors from external internet images safely
+    img.crossOrigin = 'Anonymous'; 
+    img.src = imgUrl;
+
+    img.addEventListener('load', function() {
+        try {
+            // 1. Extract the dominant color and a secondary palette color
+            const dominantColor = colorThief.getColor(img);
+            const palette = colorThief.getPalette(img, 3);
+            const secondaryColor = palette[1] || dominantColor;
+
+            // 2. Format them for CSS
+            const rgbPrimary = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
+            const rgbSecondary = `rgb(${secondaryColor[0]}, ${secondaryColor[1]}, ${secondaryColor[2]})`;
+
+            // 3. Update your app's main CSS variables globally!
+            document.documentElement.style.setProperty('--primary', rgbPrimary);
+            document.documentElement.style.setProperty('--accent', rgbSecondary);
+            
+            // Update the gradients so the play buttons and progress bars match perfectly
+            document.documentElement.style.setProperty(
+                '--gradient-primary', 
+                `linear-gradient(135deg, ${rgbPrimary}, ${rgbSecondary})`
+            );
+            
+        } catch (err) {
+            console.log("Could not extract colors, keeping default theme.", err);
+            // Fallback to your original blue/purple if the image blocks color extraction
+            document.documentElement.style.setProperty('--primary', 'hsl(210, 85%, 60%)');
+            document.documentElement.style.setProperty('--accent', 'hsl(280, 85%, 65%)');
+            document.documentElement.style.setProperty(
+                '--gradient-primary', 
+                'linear-gradient(135deg, hsl(210, 85%, 60%), hsl(280, 85%, 65%))'
+            );
+        }
+    });
+}

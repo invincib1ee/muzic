@@ -639,10 +639,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  async function playIndex(index) {
+    async function playIndex(index) {
     if (index < 0 || index >= queue.length) return;
     const item = queue[index];
-    const quality = item.quality || qualitySetting;  // Use the item's quality if available, else global
+    const quality = item.quality || qualitySetting;
+
+    // Reset the skipping lock so the crossfade can trigger again later
+    audio.isSkipping = false;
 
     // Update UI immediately (cover/title) then load url
     updateUI(item, false);
@@ -656,14 +659,62 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clear previous lyrics while we fetch new ones
     clearLyricsDisplay();
 
-    audio.src = url;
-    try {
-      await audio.play();
-      isPlaying = true;
-    } catch (e) {
-      console.error('Play failed', e);
-      isPlaying = false;
+    // --- SEAMLESS DJ CROSSFADE ENGINE ---
+    // If a song is currently playing, trigger the overlap fade
+    if (audio.src && !audio.paused && isPlaying) {
+        
+        // 1. Create a "Ghost" player to finish the old song
+        const ghostAudio = new Audio(audio.src);
+        ghostAudio.currentTime = audio.currentTime;
+        ghostAudio.volume = audio.volume;
+        ghostAudio.play().catch(e => console.log('Ghost play blocked', e));
+
+        // 2. Load the new song into the main player at 0% volume
+        audio.src = url;
+        audio.volume = 0;
+        
+        try {
+            await audio.play();
+            isPlaying = true;
+        } catch (e) {
+            console.error('Play failed', e);
+            isPlaying = false;
+        }
+
+        // 3. The DJ Fade (Smoothly transitions over 2 seconds)
+        let fadeStep = 0;
+        const fadeInterval = setInterval(() => {
+            fadeStep++;
+            let outVol = 1 - (fadeStep * 0.05); // Drops by 5% each tick
+            let inVol = fadeStep * 0.05;        // Rises by 5% each tick
+            
+            if (outVol < 0) outVol = 0;
+            if (inVol > 1) inVol = 1;
+
+            ghostAudio.volume = outVol;
+            audio.volume = inVol;
+
+            if (fadeStep >= 20) { // 20 steps * 100ms = 2000ms (2 seconds)
+                clearInterval(fadeInterval);
+                ghostAudio.pause();
+                ghostAudio.src = ''; // Clear memory
+                audio.volume = 1;    // Lock new song at 100%
+            }
+        }, 100);
+        
+    } else {
+        // Normal play (e.g. starting the very first song)
+        audio.src = url;
+        audio.volume = 1; 
+        try {
+          await audio.play();
+          isPlaying = true;
+        } catch (e) {
+          console.error('Play failed', e);
+          isPlaying = false;
+        }
     }
+    // ---------------------------------
 
     currentIndex = index;
     updateUI(item, isPlaying);
@@ -677,7 +728,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('fetchLyrics threw', e);
     }
   }
-
   async function nextSong() {
     if (!queue.length) {
       const last = (recentlyPlayed && recentlyPlayed[0]) || null;

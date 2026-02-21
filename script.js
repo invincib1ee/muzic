@@ -1846,6 +1846,51 @@ document.addEventListener('DOMContentLoaded', () => {
       audioPlayer.addEventListener('play', () => eqContainer.classList.add('active'));
       audioPlayer.addEventListener('pause', () => eqContainer.classList.remove('active'));
   }
+    // --- ACTION MODE: FULL-SCREEN GESTURES ---
+  const flipContainer = document.querySelector('.flip-container'); 
+  
+  if (flipContainer) {
+      let touchStartX = 0;
+      let touchEndX = 0;
+      let lastTapTime = 0;
+
+      // 1. Record where the finger first touches the screen
+      flipContainer.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      // 2. Record where the finger lifts off the screen
+      flipContainer.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          
+          // Calculate how far the finger moved
+          const swipeDistance = touchStartX - touchEndX;
+          
+          // --- SWIPE LEFT (Next Song) ---
+          if (swipeDistance > 50) {
+              nextSong();
+              if (navigator.vibrate) navigator.vibrate(40); // Premium haptic bump
+          }
+          // --- SWIPE RIGHT (Previous Song) ---
+          else if (swipeDistance < -50) {
+              prevSong();
+              if (navigator.vibrate) navigator.vibrate(40);
+          }
+
+          // --- DOUBLE-TAP (Play/Pause) ---
+          // Only trigger if the finger stayed relatively still (a tap, not a swipe)
+          if (Math.abs(swipeDistance) < 10) {
+              const currentTime = new Date().getTime();
+              const tapLength = currentTime - lastTapTime;
+              
+              if (tapLength < 300 && tapLength > 0) {
+                  togglePlay();
+                  if (navigator.vibrate) navigator.vibrate([30, 50, 30]); // Double vibration
+              }
+              lastTapTime = currentTime;
+          }
+      }, { passive: true });
+  }
   
 });
 

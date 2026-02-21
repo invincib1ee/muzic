@@ -2238,3 +2238,188 @@ body {
 .timer-btn:active {
     transform: scale(0.95);
 }
+/* --- PREMIUM SETTINGS CARD STYLES --- */
+.settings-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 15px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.settings-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    cursor: pointer;
+    background: transparent;
+    transition: background 0.2s;
+}
+
+.settings-card-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.settings-card-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.settings-card-info i {
+    color: var(--primary);
+    width: 24px;
+    height: 24px;
+}
+
+.settings-card-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--foreground);
+    font-weight: 600;
+}
+
+.settings-card-info p {
+    margin: 2px 0 0 0;
+    font-size: 0.8rem;
+    color: var(--primary); 
+    font-weight: 500;
+}
+
+.dropdown-icon {
+    color: var(--foreground-muted);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-card.expanded .dropdown-icon {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+
+.quality-options-wrapper {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.settings-card.expanded .quality-options-wrapper {
+    max-height: 350px; 
+    opacity: 1;
+}
+
+.quality-options {
+    padding: 0 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quality-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 12px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.quality-btn.active {
+    background: rgba(59, 130, 246, 0.1); 
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: none;
+}/* --- PREMIUM SETTINGS CARD STYLES --- */
+.settings-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 15px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.settings-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    cursor: pointer;
+    background: transparent;
+    transition: background 0.2s;
+}
+
+.settings-card-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.settings-card-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.settings-card-info i {
+    color: var(--primary);
+    width: 24px;
+    height: 24px;
+}
+
+.settings-card-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--foreground);
+    font-weight: 600;
+}
+
+.settings-card-info p {
+    margin: 2px 0 0 0;
+    font-size: 0.8rem;
+    color: var(--primary); 
+    font-weight: 500;
+}
+
+.dropdown-icon {
+    color: var(--foreground-muted);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-card.expanded .dropdown-icon {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+
+.quality-options-wrapper {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.settings-card.expanded .quality-options-wrapper {
+    max-height: 350px; 
+    opacity: 1;
+}
+
+.quality-options {
+    padding: 0 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quality-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 12px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.quality-btn.active {
+    background: rgba(59, 130, 246, 0.1); 
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: none;
+}

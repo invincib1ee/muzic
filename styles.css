@@ -2208,3 +2208,33 @@ body {
     70% { box-shadow: 0 0 0 15px rgba(247, 37, 133, 0); }
     100% { box-shadow: 0 0 0 0 rgba(247, 37, 133, 0); }
 }
+
+/* --- SLEEP TIMER STYLES --- */
+.timer-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.timer-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: var(--surface, #222); /* Fallback to dark grey */
+    color: var(--foreground);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.timer-btn.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.timer-btn:active {
+    transform: scale(0.95);
+}

@@ -954,9 +954,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsSheet = document.getElementById('settings-sheet');
   const closeSettings = document.getElementById('close-settings');
 
+  // --- SETTINGS CARD LOGIC ---
+  const qualityCard = document.getElementById('quality-card');
+  const qualityHeader = document.getElementById('quality-header');
+  const currentQualityText = document.getElementById('current-quality-text');
+
+  // 1. Toggle the dropdown open/closed when tapping the header
+  if (qualityHeader && qualityCard) {
+      qualityHeader.addEventListener('click', () => {
+          qualityCard.classList.toggle('expanded');
+      });
+  }
+
+  // 2. Update the buttons and the subtitle text
   function refreshQualityButtons() {
     document.querySelectorAll('.quality-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.quality === qualitySetting);
+      const isActive = btn.dataset.quality === qualitySetting;
+      btn.classList.toggle('active', isActive);
+      
+      // Update the card subtitle to show what is currently selected
+      if (isActive && currentQualityText) {
+          currentQualityText.textContent = btn.textContent;
+      }
     });
   }
 
@@ -965,6 +984,11 @@ document.addEventListener('DOMContentLoaded', () => {
       qualitySetting = btn.dataset.quality;
       localStorage.setItem('qualitySetting', qualitySetting);
       refreshQualityButtons();
+      
+      // Auto-close the card after making a selection (Premium UX trick)
+      if (qualityCard) {
+          qualityCard.classList.remove('expanded');
+      }
     });
   });
 

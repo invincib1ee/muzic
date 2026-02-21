@@ -264,13 +264,27 @@
       <button id="close-settings"><i data-lucide="x"></i></button>
     </div>
     <div class="sheet-body">
-      <h3>Playback Quality</h3>
-      <div class="quality-options">
-        <button class="quality-btn" data-quality="Less_low">Less Low (48 kbps)</button>
-        <button class="quality-btn" data-quality="low">Low (96 kbps)</button>
-        <button class="quality-btn" data-quality="medium">Medium (160 kbps)</button>
-        <button class="quality-btn" data-quality="high">High (320 kbps)</button>
-        <button class="quality-btn" data-quality="auto">Auto (Best)</button>
+      <div class="settings-card" id="quality-card">
+        <div class="settings-card-header" id="quality-header">
+          <div class="settings-card-info">
+            <i data-lucide="headphones"></i>
+            <div>
+              <h3>Audio Quality</h3>
+              <p id="current-quality-text">Auto (Best)</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-down" class="dropdown-icon"></i>
+        </div>
+        
+        <div class="quality-options-wrapper" id="quality-options-wrapper">
+          <div class="quality-options">
+            <button class="quality-btn" data-quality="Less_low">Less Low (48 kbps)</button>
+            <button class="quality-btn" data-quality="low">Low (96 kbps)</button>
+            <button class="quality-btn" data-quality="medium">Medium (160 kbps)</button>
+            <button class="quality-btn" data-quality="high">High (320 kbps)</button>
+            <button class="quality-btn" data-quality="auto">Auto (Best)</button>
+          </div>
+        </div>
       </div>
       <h3 style="margin-top: 25px;">Sleep Timer</h3>
       <div class="timer-options">

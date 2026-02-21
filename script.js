@@ -1855,3 +1855,85 @@ function applyDynamicTheme(imgUrl) {
         }
     });
 }
+// --- SLEEP TIMER & FADE OUT LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    const timerBtns = document.querySelectorAll('.timer-btn');
+    const timerStatus = document.getElementById('timer-status');
+    const timerCountdown = document.getElementById('timer-countdown');
+    const appAudio = document.getElementById('audio');
+
+    let sleepTimerId = null;
+    let countdownIntervalId = null;
+
+    timerBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 1. Update active button styles
+            timerBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const minutes = parseInt(btn.getAttribute('data-time'));
+
+            // 2. Clear any existing timers
+            if (sleepTimerId) clearTimeout(sleepTimerId);
+            if (countdownIntervalId) clearInterval(countdownIntervalId);
+
+            if (minutes === 0) {
+                // Turn off timer
+                timerStatus.style.display = 'none';
+                return;
+            }
+
+            // 3. Start the new timer
+            let secondsRemaining = minutes * 60;
+            timerStatus.style.display = 'block';
+            updateCountdownText(secondsRemaining);
+
+            // Update the text every second
+            countdownIntervalId = setInterval(() => {
+                secondsRemaining--;
+                updateCountdownText(secondsRemaining);
+                if (secondsRemaining <= 0) clearInterval(countdownIntervalId);
+            }, 1000);
+
+            // Set the actual trigger to fade out
+            sleepTimerId = setTimeout(() => {
+                fadeOutAndPause();
+            }, minutes * 60 * 1000);
+        });
+    });
+
+    function updateCountdownText(totalSeconds) {
+        if (totalSeconds <= 0) return;
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        timerCountdown.textContent = `${mins}m ${secs.toString().padStart(2, '0')}s`;
+    }
+
+    function fadeOutAndPause() {
+        if (!appAudio || appAudio.paused) return;
+
+        let volume = appAudio.volume; 
+        const fadeStep = 0.05; // Decrease volume by 5% each tick
+        const tickRate = 250;  // Every 250ms (Total fade = 5 seconds)
+
+        timerStatus.textContent = "Fading out...";
+
+        const fader = setInterval(() => {
+            if (volume > fadeStep) {
+                volume -= fadeStep;
+                appAudio.volume = volume;
+            } else {
+                // Fade complete! Pause and reset.
+                appAudio.volume = 0;
+                appAudio.pause();
+                clearInterval(fader);
+                
+                // Reset everything for the next day
+                appAudio.volume = 1; 
+                timerStatus.style.display = 'none';
+                timerBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.timer-btn[data-time="0"]').classList.add('active');
+            }
+        }, tickRate);
+    }
+});

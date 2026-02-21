@@ -850,6 +850,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     }
+        // === SEAMLESS DJ CROSSFADE TRIGGER ===
+    // If there are exactly 2.5 seconds left in the song, start the next one early!
+    if (dur > 0 && dur - cur <= 2.5 && !audio.isSkipping) {
+        audio.isSkipping = true; 
+        
+        if (repeatMode) {
+             playIndex(currentIndex); // Crossfade into the same song if repeating
+        } else {
+             nextSong(); // Crossfade into the next song in the queue
+        }
+    }
   });
 
   // Click-to-seek handler for the main (non-banner) player

@@ -1,4 +1,4 @@
-// ===== Music45 (JioSaavn integration + localStorage for Recently Played + Music Banner + LrcLib lyrics) =====
+// ===== Music45 (JioSaavn integration + localStorage for Recently Played + Music Banner & LrcLib lyrics) =====
 
 // Initialize Lucide icons
 function refreshIcons() {
